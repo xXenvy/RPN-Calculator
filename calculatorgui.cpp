@@ -31,7 +31,6 @@ void remove_last_char_from_output(const Ui::CalculatorGui *ui) {
     }
 }
 
-
 void CalculatorGui::on_button_process_clicked()
 {
     const std::string input = ui->input->text().toStdString();
@@ -67,7 +66,6 @@ void CalculatorGui::on_button_4_clicked()
 {
     append_string_to_output(ui, "4");
 }
-
 
 void CalculatorGui::on_button_5_clicked()
 {
@@ -145,4 +143,3 @@ void CalculatorGui::on_button_all_clear_clicked()
         remove_last_char_from_output(ui);
     }
 }
-

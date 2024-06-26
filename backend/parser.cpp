@@ -38,28 +38,28 @@ std::vector<Token> RPNParser::parse(const std::vector<Token>& tokens) const {
             continue;
         }
         switch (token.value_as_char) {
-        case '(':
-            stack.push(token);
-            break;
-        case ')':
-            while (stack.size()) {
-                const Token top_operator = stack.top();
-                stack.pop();
-                if (top_operator.value == "(") break; // Move all operators to output until '(' appears.
-                output.push_back(top_operator);
-            }
-            break;
-        default: // Operators: +, −, ×, /, %, ^.
-            while (stack.size()) {
-                // We have to move all higher-priority operators to output
-                // before adding a new operator to the stack.
-                const Token top_operator = stack.top();
-                if (top_operator.get_priority() < token.get_priority()) break;
+            case '(':
+                stack.push(token);
+                break;
+            case ')':
+                while (stack.size()) {
+                    const Token top_operator = stack.top();
+                    stack.pop();
+                    if (top_operator.value == "(") break; // Move all operators to output until '(' appears.
+                    output.push_back(top_operator);
+                }
+                break;
+            default: // Operators: +, −, ×, /, %, ^.
+                while (stack.size()) {
+                    // We have to move all higher-priority operators to output
+                    // before adding a new operator to the stack.
+                    const Token top_operator = stack.top();
+                    if (top_operator.get_priority() < token.get_priority()) break;
 
-                output.push_back(top_operator);
-                stack.pop();
-            }
-            stack.push(token);
+                    output.push_back(top_operator);
+                    stack.pop();
+                }
+                stack.push(token);
         }
     }
     while (stack.size()) {
