@@ -29,6 +29,7 @@ std::vector<Token> RPNParser::parse(const std::vector<Token>& tokens) const {
     // Parses tokens into RPN annotation.
     // Example: "1", "+", "2" -> "1", "2", "+"
     std::vector<Token> output;
+    output.reserve(tokens.capacity());
     std::stack<Token> stack;
 
     for (const Token& token : tokens) {
@@ -62,6 +63,7 @@ std::vector<Token> RPNParser::parse(const std::vector<Token>& tokens) const {
                 stack.push(token);
         }
     }
+    // Move the rest of the crap from the stack to output.
     while (stack.size()) {
         output.push_back(stack.top());
         stack.pop();
@@ -73,6 +75,7 @@ std::vector<Token> RPNParser::read_tokens(const std::string& text) const {
     // Reads tokens from the string text.
     // Token is a single element, for example full number or an operator.
     std::vector<Token> tokens;
+    tokens.reserve(text.size());
     std::string token_value;
 
     for (const char& ch : text) {

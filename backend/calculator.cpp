@@ -9,10 +9,11 @@ float RPNCalculator::calculate(const std::vector<Token>& tokens) const {
 
     for (const Token& token : tokens) {
         if (!token.is_operator()) {
-            stack.push(token);
+            stack.push(token); // Add a number to stack.
             continue;
         }
 
+        // Adds the result of the operator and the last two numbers from the stack.
         const float a_value = std::stof(stack.top().value);
         stack.pop();
 
@@ -28,6 +29,8 @@ float RPNCalculator::calculate(const std::vector<Token>& tokens) const {
 
 float RPNCalculator::get_equation_result(const char& _operator, const float a, const float b) const {
     switch (_operator) {
+        case '+':
+            return a + b;
         case '-':
             return a - b;
         case '/':
@@ -41,7 +44,7 @@ float RPNCalculator::get_equation_result(const char& _operator, const float a, c
             if (static_cast<int>(b) == 0) throw std::runtime_error("Modulo by zero.");
             return static_cast<float>(static_cast<int>(a) % static_cast<int>(b));
         default:
-            return a + b;
+            throw std::runtime_error("Invalid operator.");
     }
 }
 
